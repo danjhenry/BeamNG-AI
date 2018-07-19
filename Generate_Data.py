@@ -8,6 +8,7 @@ import cv2
 import os
 
 image_size = (400, 300)
+beamNG_window_name = ''
 
 action = {
     'AW': [1, 0, 0, 0, 0, 0, 0, 0],
@@ -20,10 +21,10 @@ action = {
     'D' : [0, 0, 0, 0, 0, 0, 0, 1],
     }
 
-def windowHandle(defaultName='New Tab - Google Chrome'):
+def windowHandle(window_name):
     while True:
         try:
-            handle = win32gui.FindWindow(None, defaultName)
+            handle = win32gui.FindWindow(None, window_name)
             print('Handle: ', handle)
             break
         except:
@@ -91,7 +92,7 @@ def main():
             if keys_on in action:
                 print(keys_on)
                 output = action[keys_on]
-                frame = imageCap(windowHandle())
+                frame = imageCap(windowHandle(beamNG_window_name))
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 frame = cv2.resize(frame, image_size)
                 training_data.append([frame, output])
