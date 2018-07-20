@@ -31,20 +31,6 @@ def windowHandle(name):
             time.sleep(5)
     return handle
 
-'''
-
-def keypress(keys, handle):
-    print(keys)
-    for key in keys:
-        win32api.PostMessage(handle, win32con.WM_KEYDOWN, ord(key), None)
-        time.sleep(.1)
-        
-    for key in keys:
-        win32api.PostMessage(handle, win32con.WM_KEYUP, ord(key), None)
-        time.sleep(.1)
-'''
-
-
 def turn(keys, handle):
     keys.append('S')
     for key in keys:
@@ -147,23 +133,3 @@ def main():
         print(choice_picked)
 
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
