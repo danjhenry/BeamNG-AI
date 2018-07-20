@@ -33,7 +33,7 @@ for e in range(EPOCHS):
             # full file info
             train_data = np.load(file_name)
             print('training_data-{}.npy'.format(i),len(train_data))
-
+            
             train = train_data[:-200]
             test = train_data[-200:]
 
