@@ -34,7 +34,6 @@ def windowHandle(name):
             time.sleep(5)
     return handle
 
-<<<<<<< HEAD
 def keyState(loop, key='P'):
     state = win32api.GetAsyncKeyState(ord(key))
     if(state < 0 or state == 1):
@@ -45,27 +44,6 @@ def keyState(loop, key='P'):
             print('Resumed')
             return True
 
-=======
-def turn(keys, handle):
-    keys.append('S')
-    for key in keys:
-        win32api.SendMessage(handle, win32con.WM_KEYDOWN, ord(key), None)
-        time.sleep(.12)
-        win32api.SendMessage(handle, win32con.WM_KEYUP, ord(key), None)
-
-
-def keypress(keys, handle):
-    global keysOn
-    for key in keys:
-        if key in keysOn:
-            keysOn.remove(key)
-        win32api.SendMessage(handle, win32con.WM_KEYDOWN, ord(key), None)
-        
-    if keysOn:
-        for key in keysOn:
-            print('stop ', key)
-            win32api.SendMessage(handle, win32con.WM_KEYUP, ord(key), None)
->>>>>>> f8a82f2f91b94e97652126f5927a8f513249a479
 
 def mousemove(handle, pos=center):
     win32api.SetCursorPos(pos)
@@ -205,3 +183,23 @@ def main():
             runloop = Pause_func(runloop, key='P')
     
 main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

@@ -33,17 +33,11 @@ for e in range(EPOCHS):
             # full file info
             train_data = np.load(file_name)
             print('training_data-{}.npy'.format(i),len(train_data))
-<<<<<<< HEAD
 
             testlen = int(len(train_data) * 0.1)
 
             train = train_data[:-testlen]
             test = train_data[-testlen:]
-=======
-            
-            train = train_data[:-200]
-            test = train_data[-200:]
->>>>>>> f8a82f2f91b94e97652126f5927a8f513249a479
 
             X = np.array([i[0] for i in train]).reshape(-1,WIDTH,HEIGHT,3)
             Y = [i[1] for i in train]
