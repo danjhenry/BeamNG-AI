@@ -5,19 +5,19 @@ from Inception_net import inception_v3 as googlenet
 from random import shuffle
 
 # last data file
-FILE_I_END = 22
+FILE_I_END = 19
 
 WIDTH = 200
 HEIGHT = 150
 LR = 0.001
-EPOCHS = 15
+EPOCHS = 9
 
-MODEL_NAME = 'BeamNG_0.1'
-PREV_MODEL = 'BeamNG_0.1'
+MODEL_NAME = 'BeamNG_1.0'
+PREV_MODEL = 'BeamNG_1.0'
 
-LOAD_MODEL = True
+LOAD_MODEL = False
 
-model = googlenet(WIDTH, HEIGHT, 3, LR, output=8, model_name=MODEL_NAME)
+model = googlenet(WIDTH, HEIGHT, 3, LR, output=9, model_name=MODEL_NAME)
 
 if LOAD_MODEL:
     model.load('model/{}'.format(PREV_MODEL))
@@ -29,13 +29,15 @@ for e in range(EPOCHS):
     for count,i in enumerate(data_order):
         
         try:
-            file_name = 'balance_data/training_data-{}.npy'.format(i)
+            file_name = 'balanced_data/training_data-{}.npy'.format(i)
             # full file info
             train_data = np.load(file_name)
             print('training_data-{}.npy'.format(i),len(train_data))
 
-            train = train_data[:-200]
-            test = train_data[-200:]
+            testlen = int(len(train_data) * 0.1)
+
+            train = train_data[:-testlen]
+            test = train_data[-testlen:]
 
             X = np.array([i[0] for i in train]).reshape(-1,WIDTH,HEIGHT,3)
             Y = [i[1] for i in train]

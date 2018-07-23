@@ -1,30 +1,31 @@
 import win32api, win32gui, win32ui
 from random import shuffle
 from ctypes import windll
+from PIL import Image
 import numpy as np
 import win32api
 import time
 import cv2
 import os
 
-image_size = (400, 300)
-beamNG_window_name = ''
-
+image_size = (200,150)
+window_name = r'BeamNG.drive - 0.13.0.1.6460 - RELEASE - x64'
 action = {
-    'AW': [1, 0, 0, 0, 0, 0, 0, 0],
-    'DW': [0, 1, 0, 0, 0, 0, 0, 0],
-    'AS': [0, 0, 1, 0, 0, 0, 0, 0],
-    'DS': [0, 0, 0, 1, 0, 0, 0, 0],
-    'W' : [0, 0, 0, 0, 1, 0, 0, 0],
-    'S' : [0, 0, 0, 0, 0, 1, 0, 0],
-    'A' : [0, 0, 0, 0, 0, 0, 1, 0],
-    'D' : [0, 0, 0, 0, 0, 0, 0, 1],
+    'AW': [1, 0, 0, 0, 0, 0, 0, 0, 0],
+    'DW': [0, 1, 0, 0, 0, 0, 0, 0, 0],
+    'AS': [0, 0, 1, 0, 0, 0, 0, 0, 0],
+    'DS': [0, 0, 0, 1, 0, 0, 0, 0, 0],
+    'W' : [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    'A' : [0, 0, 0, 0, 0, 1, 0, 0, 0],
+    'S' : [0, 0, 0, 0, 0, 0, 1, 0, 0],
+    'D' : [0, 0, 0, 0, 0, 0, 0, 1, 0],
+    'NA': [0, 0, 0, 0, 0, 0, 0, 0, 1]
     }
 
-def windowHandle(window_name):
+def windowHandle(name):
     while True:
         try:
-            handle = win32gui.FindWindow(None, window_name)
+            handle = win32gui.FindWindow(None, name)
             print('Handle: ', handle)
             break
         except:
@@ -83,26 +84,35 @@ def main():
         else:
             print('Starting at {}.'.format(file_num))
             break
-    
+        
+    for x in range(5)[::-1]:
+        print(x)
+        time.sleep(1)
+
+    handle = windowHandle(window_name)
+
     while True:
         keys_on = keyState()
+        frame = imageCap(handle)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.resize(frame, image_size)
+        
         if keys_on:
             keys_on.sort()
             keys_on = ''.join(keys_on)
             if keys_on in action:
                 print(keys_on)
                 output = action[keys_on]
-                frame = imageCap(windowHandle(beamNG_window_name))
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                frame = cv2.resize(frame, image_size)
                 training_data.append([frame, output])
-                if len(training_data) % 2000 == 0:
+                if len(training_data) >= 4000:
                     print('starting save')
-                    payload = reset_car(payload)
-                    send_command(payload)
                     save_file(training_data, file_num)
                     file_num += 1
-                    training_data = list()
+                    training_data  = list()
                     print('saved')
+        else:
+            print('NA')
+            output = action['NA']
+            training_data.append([frame, output])
 
 main()
