@@ -50,13 +50,9 @@ for i in range(1, files+1):
             
     length = min(len(lefts), len(rights), len(forwards), len(No_move))
     print('min ', length)
-
-    print(len(forwards[:length]))
-
     final_data += lefts[:length] + rights[:length] + forwards[:length] + No_move[:length] + left_over
-
     shuffle(final_data)
-    
+
     if len(final_data) < 2000:
         left_over = final_data
         
@@ -67,18 +63,3 @@ for i in range(1, files+1):
 
     if i == files:
         np.save('balanced_data/training_data-{}.npy'.format(j+1), final_data)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
